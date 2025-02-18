@@ -4,20 +4,18 @@
 #include <string.h>
 #include <arpa/inet.h>
 
-void packet_handler(unsigned char* counter, const struct pcap_pkthdr* header, const unsigned char* packetData) {
+void packet_handler(unsigned char* counter, const struct pcap_pkthdr* header, const unsigned char* packetData, const char* target_mac) {
     char mac_addr[18];
     snprintf(mac_addr, sizeof(mac_addr), "%02X:%02X:%02X:%02X:%02X:%02X",
         packetData[10], packetData[11], packetData[12],
         packetData[13], packetData[14], packetData[15]);
-
-    const char* target_mac = "XX:XX:XX:XX:XX:XX"; // Target MAC address to match
 
     if (strcmp(mac_addr, target_mac) == 0) {
         printf("Target Wi-Fi Device Probe Request Detected: %s\n", mac_addr);
     }
 }
 
-int start_packet_capture() {
+int start_packet_capture(const char* target_mac) {
     char* dev = "wlan1";  
     char errbuf[PCAP_ERRBUF_SIZE];
     pcap_t* handle;
@@ -42,7 +40,7 @@ int start_packet_capture() {
 
     // Capture packets indefinitely
     printf("Scanning for Wi-Fi probe requests...\n");
-    pcap_loop(handle, 0, packet_handler, NULL);
+    pcap_loop(handle, 0, (pcap_handler)packet_handler, (unsigned char*)target_mac);
 
     // Close the handle
     pcap_close(handle);
@@ -50,5 +48,9 @@ int start_packet_capture() {
 }
 
 int main() {
-    return start_packet_capture();
+    char target_mac[18];
+    printf("Enter the target MAC address (XX:XX:XX:XX:XX:XX): ");
+    scanf("%17s", target_mac);  // Accept the MAC address from user input
+
+    return start_packet_capture(target_mac);
 }
