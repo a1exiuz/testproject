@@ -21,7 +21,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($file) {
         fwrite($file, $entry);
         fclose($file);
-        echo "Incident report submitted successfully!";
+        
+        // Redirect to a confirmation page
+        header("Location: thank_you.html");
+        exit();
     } else {
         echo "Error writing to file.";
     }
