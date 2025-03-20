@@ -1,0 +1,31 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get user input from the form
+    $name = htmlspecialchars($_POST["name"]);
+    $supplies = htmlspecialchars($_POST["supplies"]);
+    $location = htmlspecialchars($_POST["location"]);
+    $num_people = intval($_POST["num_people"]);
+    $hours_stranded = intval($_POST["hours_stranded"]);
+    $injuries = intval($_POST["injuries"]);
+
+    // Format the data for the C program
+    $entry = "Name: $name\n";
+    $entry .= "Supplies Needed: $supplies\n";
+    $entry .= "Number of People: $num_people\n";
+    $entry .= "Hours Stranded: $hours_stranded\n";
+    $entry .= "Location: $location\n";
+    $entry .= "Number of Injuries: $injuries\n\n";
+
+    // Append to the user_info.txt file
+    $file = fopen("user_info.txt", "a");
+    if ($file) {
+        fwrite($file, $entry);
+        fclose($file);
+        echo "Incident report submitted successfully!";
+    } else {
+        echo "Error writing to file.";
+    }
+} else {
+    echo "Invalid request.";
+}
+?>
