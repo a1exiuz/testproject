@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incident Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px #ccc;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Incident Report Form</h2>
+    <form id="incidentForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="supplies">Supplies Needed:</label>
+        <textarea id="supplies" required></textarea>
+
+        <label for="numPeople">Number of People:</label>
+        <input type="number" id="numPeople" min="1" required>
+
+        <label for="hoursStranded">Hours Stranded:</label>
+        <input type="number" id="hoursStranded" min="0" required>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" required>
+
+        <label for="injuries">Number of Injuries:</label>
+        <input type="number" id="injuries" min="0" required>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="output" class="result" style="display: none;"></div>
+</div>
+
+<script>
+    document.getElementById("incidentForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        // Get form values
+        let name = document.getElementById("name").value;
+        let supplies = document.getElementById("supplies").value;
+        let numPeople = document.getElementById("numPeople").value;
+        let hoursStranded = document.getElementById("hoursStranded").value;
+        let location = document.getElementById("location").value;
+        let injuries = document.getElementById("injuries").value;
+
+        // Display results
+        document.getElementById("output").innerHTML = `
+            <h3>Incident Details</h3>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Supplies Needed:</strong> ${supplies}</p>
+            <p><strong>Number of People:</strong> ${numPeople}</p>
+            <p><strong>Hours Stranded:</strong> ${hoursStranded}</p>
+            <p><strong>Location:</strong> ${location}</p>
+            <p><strong>Number of Injuries:</strong> ${injuries}</p>
+        `;
+        document.getElementById("output").style.display = "block";
+    });
+</script>
+
+</body>
+</html> if i wanted to add a picture how would i do it
