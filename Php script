@@ -1,5 +1,9 @@
 <?php
+error reporting(E_ALL);
+ini_set('display_errors', 1);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	echo "Form Receiived:";
+
     // Get user input from the form
     $name = htmlspecialchars($_POST["name"]);
     $supplies = htmlspecialchars($_POST["supplies"]);
@@ -20,10 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $file = fopen("user_info.txt", "a");
     if ($file) {
         fwrite($file, $entry);
-        fclose($file);
-        
+        fclose($file);        
         // Redirect to a confirmation page
-        header("Location: thank_you.html");
+        header("Location: Successpage.html");
         exit();
     } else {
         echo "Error writing to file.";
@@ -32,3 +35,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Invalid request.";
 }
 ?>
+
